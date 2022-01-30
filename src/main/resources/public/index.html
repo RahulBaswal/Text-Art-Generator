@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Text Art Generator</title>
+		<style>
+
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+				background-size: 400% 400%;
+				animation: gradient 15s ease infinite;
+			}
+
+			@keyframes gradient {
+				0% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
+				}
+				100% {
+					background-position: 0% 50%;
+				}
+			}
+			
+			.form {
+				width: 90%;
+				
+				margin: 10px;
+			}
+			
+			fieldset {
+			  border: 2px solid black;
+			  border-radius: 15px;
+			}
+
+			legend {
+			  border: 1px solid black;
+			  border-radius: 15px;
+			  padding: 5px 10px;
+			  color: black;
+			  border-radius: 25px;
+			  font-size:large;
+			  font-weight: bold;
+			}
+			
+			textarea {
+			  width: 90%;
+			  white-space: nowrap;
+			  min-height: 200px;
+			  background:transparent;
+			  border:2px solid black;
+			  border-radius: 5px;
+			  
+			  color: black;
+			  font-size:large;
+			  font-weight: bold;
+			  
+			  margin: 10px;
+			}
+			
+			button {
+				background-color: #555555; 
+				border: none;
+				color: white;
+				padding: 15px 32px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 16px;
+				box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+				transition-duration: 0.4s;
+				border-radius: 25px;
+				margin: 10px;
+			}
+
+			button:hover {
+			  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+			  background-color: #555555;
+			  color: white;
+			}
+			
+			.custom-select {
+			  position: relative;
+			  font-family: Arial;
+			}
+
+			.custom-select select {
+			  display: none; /*hide original SELECT element: */
+			}
+
+			.select-selected {
+			  background-color: #555555;
+			}
+
+			/* Style the arrow inside the select element: */
+			.select-selected:after {
+			  position: absolute;
+			  content: "";
+			  top: 14px;
+			  right: 10px;
+			  width: 0;
+			  height: 0;
+			  border: 6px solid transparent;
+			  border-color: #fff transparent transparent transparent;
+			}
+
+			/* Point the arrow upwards when the select box is open (active): */
+			.select-selected.select-arrow-active:after {
+			  border-color: transparent transparent #fff transparent;
+			  top: 7px;
+			}
+
+			/* style the items (options), including the selected item: */
+			.select-items div,.select-selected {
+			  color: #ffffff;
+			  padding: 8px 16px;
+			  border: 1px solid transparent;
+			  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+			  cursor: pointer;
+			}
+
+			/* Style items (options): */
+			.select-items {
+			  position: absolute;
+			  background-color: #555555;
+			  top: 100%;
+			  left: 0;
+			  right: 0;
+			  z-index: 99;
+			}
+
+			/* Hide the items when the select box is closed: */
+			.select-hide {
+			  display: none;
+			}
+
+			.select-items div:hover, .same-as-selected {
+			  background-color: rgba(0, 0, 0, 0.1);
+			}
+			
+			.w3-input{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:90%;background-color: #888888;color:white;border-radius: 25px;font-size:medium;font-weight: bold;}
+			.w3-border{border:1px solid #ccc!important}
+			.w3-animate-input{transition:width 0.4s ease-in-out}.w3-animate-input:focus{width:90%!important}
+			
+			h1 {
+				text-transform:uppercase;
+				font-family:'Verdana';
+				padding:10px;
+				margin: 10px;
+			}
+			
+			.title {
+				text-align:center;
+				text-transform: uppercase;
+				font-family: verdana;
+				font-weight: 700;
+				color: #f5f5f5;
+				text-shadow: 1px 1px 1px #919191,
+					1px 2px 1px #919191,
+					1px 3px 1px #919191,
+					1px 4px 1px #919191,
+					1px 5px 1px #919191,
+					1px 6px 1px #919191,
+					1px 7px 1px #919191,
+					1px 8px 1px #919191,
+					1px 9px 1px #919191,
+					1px 10px 1px #919191,
+				1px 18px 6px rgba(16,16,16,0.4),
+				1px 22px 10px rgba(16,16,16,0.2),
+				1px 25px 35px rgba(16,16,16,0.2),
+				1px 30px 60px rgba(16,16,16,0.4);
+			}
+		</style>
+		
+	</head>
+	<body>
+		<h1 class="title">Text Art Generator !</h1>
+		
+		<div class="form">
+			<fieldset>
+			
+			<fieldset>
+			<legend><label for="text">Enter Text :</label></legend>
+			<input class="w3-input w3-border w3-animate-input" type="text" style="width:30%" id="text" name="text" required>
+			</fieldset>
+			
+			<br>
+			
+			<fieldset>
+			<legend>Select Font:</legend>
+			<div class="custom-select" style="width:200px;">
+			<select name="type" id="type">
+				<option value="0">Big</option>
+				<option value="1">BulHead</option>
+				<option value="2">ThreeD</option>
+				<option value="3">Dash</option>
+				<option value="4">Alligator2</option>
+				<option value="5">Banner</option>
+				<option value="6">Block</option>
+				<option value="7">Coinstak</option>
+				<option value="8">Larry3d</option>
+				<option value="9">Universe</option>
+			</select>
+			</div>
+			</fieldset>
+			
+			<br>
+			
+			<fieldset>
+			<legend>Direction of text:</legend>
+			<div class="custom-select" style="width:200px;">
+			<select id="direction">
+				<option value="horizontal">Horizontal</option>
+				<option value="vertical">Vertical</option>
+			</select>
+			</div>
+			</fieldset>
+			
+			<br>
+			
+			<button onclick="printText()">Generate Text</button>
+
+			</fieldset>
+		</div>
+
+		<br>
+
+		<h1>Output:</h1>
+		<button onclick="clearText()" style="float:left;">Clear Output</button>
+		<button onclick="copyToClipboard()">Copy to Clipboard</button>
+		<textarea id="textart" name="textart" spellcheck="false"></textarea>
+		
+		<script>
+			let newline = String.fromCharCode(13, 10);
+			//let output = document.getElementById("textart").value;
+			
+			function printText() {
+				document.getElementById("textart").value = "";
+				
+				let text, type, direction;
+				text = document.getElementById("text").value;
+				type = document.getElementById("type").value;
+				direction = document.getElementById("direction").value;
+				
+				let query = "/api/textart?text="+text+"&type="+type; 
+				
+				fetch(query)
+				.then(data => {
+				return data.json();
+				})
+				.then( textart => {
+			
+					if(direction == "horizontal") {
+						// to print text horizontally
+						for(let i=0; i<textart[0].length; i++) {
+						let str="";
+							for(let j=0; j<textart.length; j++) {
+								str+=(textart[j][i]);
+							}
+							addText(str+"\n");
+						}
+					}
+						
+					if(direction == "vertical") {
+						// to print text vertically
+						for(let i=0; i<textart.length; i++) {
+						let str="";
+							for(let j=0; j<textart[0].length; j++) {
+								str+=(textart[i][j]);
+								addText(str+"\n");
+								str="";
+							}
+						}
+					}
+					
+					document.getElementById("textart").focus();
+				});
+				
+			}
+			
+			function addText(str) {
+				let newStr = str.replaceAll('\\n', newline);
+				document.getElementById("textart").value += newStr;
+			}
+			
+			function clearText() {
+				document.getElementById("textart").value = "";
+			}
+			
+			function copyToClipboard() {
+				document.getElementById('textart').select();
+				document.execCommand('copy');
+			}
+		
+			let x, i, j, l, ll, selElmnt, a, b, c;
+			/* Look for any elements with the class "custom-select": */
+			x = document.getElementsByClassName("custom-select");
+			l = x.length;
+			for (i = 0; i < l; i++) {
+			  selElmnt = x[i].getElementsByTagName("select")[0];
+			  ll = selElmnt.length;
+			  /* For each element, create a new DIV that will act as the selected item: */
+			  a = document.createElement("DIV");
+			  a.setAttribute("class", "select-selected");
+			  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+			  x[i].appendChild(a);
+			  /* For each element, create a new DIV that will contain the option list: */
+			  b = document.createElement("DIV");
+			  b.setAttribute("class", "select-items select-hide");
+			  for (j = 0; j < ll; j++) {
+				/* For each option in the original select element,
+				create a new DIV that will act as an option item: */
+				c = document.createElement("DIV");
+				c.innerHTML = selElmnt.options[j].innerHTML;
+				c.addEventListener("click", function(e) {
+					/* When an item is clicked, update the original select box,
+					and the selected item: */
+					var y, i, k, s, h, sl, yl;
+					s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+					sl = s.length;
+					h = this.parentNode.previousSibling;
+					for (i = 0; i < sl; i++) {
+					  if (s.options[i].innerHTML == this.innerHTML) {
+						s.selectedIndex = i;
+						h.innerHTML = this.innerHTML;
+						y = this.parentNode.getElementsByClassName("same-as-selected");
+						yl = y.length;
+						for (k = 0; k < yl; k++) {
+						  y[k].removeAttribute("class");
+						}
+						this.setAttribute("class", "same-as-selected");
+						break;
+					  }
+					}
+					h.click();
+				});
+				b.appendChild(c);
+			  }
+			  x[i].appendChild(b);
+			  a.addEventListener("click", function(e) {
+				/* When the select box is clicked, close any other select boxes,
+				and open/close the current select box: */
+				e.stopPropagation();
+				closeAllSelect(this);
+				this.nextSibling.classList.toggle("select-hide");
+				this.classList.toggle("select-arrow-active");
+			  });
+			}
+
+			function closeAllSelect(elmnt) {
+			  /* A function that will close all select boxes in the document,
+			  except the current select box: */
+			  let x, y, i, xl, yl, arrNo = [];
+			  x = document.getElementsByClassName("select-items");
+			  y = document.getElementsByClassName("select-selected");
+			  xl = x.length;
+			  yl = y.length;
+			  for (i = 0; i < yl; i++) {
+				if (elmnt == y[i]) {
+				  arrNo.push(i)
+				} else {
+				  y[i].classList.remove("select-arrow-active");
+				}
+			  }
+			  for (i = 0; i < xl; i++) {
+				if (arrNo.indexOf(i)) {
+				  x[i].classList.add("select-hide");
+				}
+			  }
+			}
+
+			/* If the user clicks anywhere outside the select box,
+			then close all select boxes: */
+			document.addEventListener("click", closeAllSelect);
+			
+		</script>
+		
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
