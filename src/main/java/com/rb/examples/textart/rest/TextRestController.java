@@ -11,6 +11,7 @@ import com.rb.examples.textart.textlogic.TextArt;
 @RequestMapping("/api")
 public class TextRestController {
 
+	@CrossOrigin
 	@GetMapping("/textart")
 	public String[][] getTextArt(
 			@RequestParam(value="type", required=false, defaultValue = "0") int type,
